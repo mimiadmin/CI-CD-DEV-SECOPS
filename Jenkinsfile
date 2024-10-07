@@ -20,7 +20,7 @@ pipeline{
         }
         stage('Checkout from Git'){
             steps{
-                git branch: 'dev-sec-ops-cicd-pipeline-project-one', url: 'https://github.com/awanmbandi/realworld-microservice-project.git'
+                git branch: 'main', url: 'https://github.com/mimiadmin/CI-CD-DEV-SECOPS.git'
             }
         }
         stage('Install Dependencies') {
@@ -59,15 +59,15 @@ pipeline{
                 script{
                    withDockerRegistry(credentialsId: 'DockerHub-Credential', toolName: 'Docker'){
                        sh "docker build -t reddit ."
-                       sh "docker tag reddit awanmbandi/reddit:latest "
-                       sh "docker push awanmbandi/reddit:latest "
+                       sh "docker tag reddit mimijoso/reddit:latest "
+                       sh "docker push mimijoso/reddit:latest "
                     }
                 }
             }
         }
         stage("Trivy App Image Scan"){
             steps{
-                sh "trivy image awanmbandi/reddit:latest > trivy_image_analysis_report.txt"
+                sh "trivy image mimijoso/reddit:latest > trivy_image_analysis_report.txt"
             }
         }
         stage('Deploy to K8S Stage Environment'){
